@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding= "utf-8"?>
+<odoo>
+  <data>
+    <!--Aqui definimos a action que sera chamada pelo menuitem-->
+    <record id="nutrients_action_dietfacts" model="ir.actions.act_window">
+         <field name="name">Nutrients</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">product.template.nutrient</field>
+         <field name="view_mode">tree,form,graph</field>
+         <field name="view_type">form</field> <!--Aqui temos a view que é chamada quando clicamos em uma entidade-->
+         <field name="help" type="html">
+           <p class="oe_view_nocontent_create">
+             Clique para definir o meal.
+           </p>
+         </field>
+     </record>
+
+    <!--Definição das informações que aparecem no treeview (listview)-->
+    <record id= "dietfacts_nutrients_tree_view" model= "ir.ui.view">
+    <field name="model">product.template.nutrient</field >
+    <field name="arch" type= "xml">
+      <tree>
+        <field name="nutrient_id"/>
+        <field name="value"/>
+        <field name="dailypercent" widget="percentage"/>
+        <field name="dailyRecommended"/>
+
+      </tree>
+    </field>
+    </record>
+
+    <!--definição do formulario que é chamado, caso não seja definido é utilizado o default-->
+    <record id= "dietfacts_meal_form_view" model= "ir.ui.view">
+      <field name="model">product.template.nutrient</field >
+      <field name="arch" type= "xml">
+      <form>
+        <!--A tag group define as informações que serão necessarias para o cadastro-->
+        <group>
+          <field name="product_id"/>
+          <field name="value"/>
+          <field name="nutrient_id"/>
+          <field name="dailyRecommended"/>
+          <field name="dailypercent" widget="percentage"/>
+          <field widget="mask_regex" data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}" name="uom" />
+        </group>
+      </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_nutrient_line_graph">
+       <field name="name">nutrient.line.graph</field>
+       <field name="model">product.template.nutrient</field>
+       <field name="type">graph</field>
+       <field name="arch" type="xml">
+             <graph string="Dietfacts Lines">
+                  <field name="product_id" group="True"/>
+                  <field name="nutrient_id" group="True"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--Item do menu-->
+    <menuitem action="nutrients_action_dietfacts"
+         id="menu_product_template_action_nutrients"
+         parent="sales_team.menu_base_partner" sequence="26"/>
+  </data>
+</odoo>

@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+    <!--Herança de view, criação de page no notebook e criação de treeview-->
+    <record id="product_edit_view" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field eval="20" name="priority"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]" position="before">
+              <page name="nutrients_page" string="Nutrients">
+                <field name='nutrient_ids' widget='one2many_list'>
+                  <tree editable="bottom">
+                    <field name="nutrient_id"/>
+                    <field name="value"/>
+                    <field name="dailypercent"/>
+                    <field name="uom"/>
+                  </tree>
+              </field>
+              </page>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
